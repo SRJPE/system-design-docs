@@ -4,6 +4,8 @@ The goal of this document is to describe the data used in SR JPE modeling and ho
 
 This document is still a work in progress and iteratively updated (and in some places incomplete).
 
+Please contact Ashley Vizek (avizek@flowwest.com) with questions regarding this documentation.
+
 ## Project Overview
 
 The SR JPE data management system is comprised of a suite of data storage, processing, and access components. This system is working to align with current salmonid data management across agencies while also transitioning to a modernized system. 
@@ -19,7 +21,7 @@ Data from different SR JPE system components are integrated and made available a
 
 ![](images/system_architecture_overview.png){ width=50% }
 
-## Existing Data Resources
+## Existing Data Resources {.tabset}
 
 The SR JPE utilizes the following types of data:
 
@@ -59,6 +61,8 @@ Deer and Mill creeks are in the process of transitioning to an electronic data c
 
 #### Quality Control
 
+Each monitoring program performs there own QC on data which often includes manual checks when entering data and end of season checks. FlowWest conducted QC on historical datasets when received from monitoring programs (see [JPE-datasets repository](https://github.com/SRJPE/JPE-datasets)).
+
 #### Data Updates
 
 The RST EDI packages described in Table 1 are updated on a biweekly schedule. On the second and fourth Wednesdays of each month, Data Stewards export data and email to data@flowwest.com to initiate an automated update process for their EDI package[^2]. This process is needed to facilitate near real-time updates to SR JPE models.
@@ -67,6 +71,22 @@ The RST EDI packages described in Table 1 are updated on a biweekly schedule. On
 
 Data uploaded within a monitoring season are considered provisional as additional QC is conducted at the end of the monitoring season.
 
+#### Repository Links
+
+* [Initial data QC and processing](https://github.com/SRJPE/JPE-datasets)
+
+Prepare RST data for publication
+
+* [Battle and Clear creeks RST EDI package](https://github.com/FlowWest/edi-battle-clear-rst)
+* [Butte Creek RST EDI package](https://github.com/SRJPE/jpe-butte-edi)
+* [Deer and Mill creeks RST EDI package](https://github.com/SRJPE/jpe-deer-mill-edi)
+* [Feather River RST EDI package](https://github.com/SRJPE/jpe-feather-edi)
+* [Sacramento River Knights Landing RST EDI package](https://github.com/SRJPE/jpe-knights-edi)
+* [Sacramento River Tisdale RST EDI package](https://github.com/SRJPE/jpe-tisdale-edi)
+* [Sacramento River Delta Entry RST EDI package](https://github.com/SRJPE/jpe-delta-entry-edi)
+* [Yuba River RST EDI package](https://github.com/SRJPE/jpe-yuba-edi)
+
+Prepare adult data for publication (to be added when published)
 
 ### Coded Wire Tag Data
 
@@ -75,6 +95,8 @@ Data uploaded within a monitoring season are considered provisional as additiona
 #### Quality Control
 
 #### Data Updates
+
+#### Repository Links
 
 ### Flow and Temperature Data
 
@@ -88,6 +110,8 @@ Flow and water temperature are important covariates in many aspects of SR JPE, a
 
 Covariate data is available via APIs through USGS or CDEC. The data update process of these existing datasets is not facilitated through SR JPE.
 
+#### Repository Links
+
 ### Genetic Data
 
 #### Source Data
@@ -96,7 +120,9 @@ Covariate data is available via APIs through USGS or CDEC. The data update proce
 
 #### Data Updates
 
-## SR JPE Data Resources
+#### Repository Links
+
+## SR JPE Data Resources {.tabset}
 
 The SR JPE has created a number of data resources for integrating, managing, storing, and making data accessible for use. The first step in integrating disparate data was to make those datasets publicly available (see Table 1, insert table for genetics data). Data could then be pulled from these public repositories and integrated for use in SR JPE modeling. We utilize a suite of PostgreSQL databases hosted on Microsoft Azure and in all cases the data stored in the databases can be accessed through EDI. To make the data readily usable for SR JPE modeling we created an R data package called SRJPEdata and to run SR JPE models we compiled and functionalized model code developed by SR JPE modelers including Josh Korman, Flora Cordoleani, Liz Stebbins, and Noble Hendrix. 
 
@@ -106,11 +132,24 @@ The SR JPE requires data from multiple sources. The SR JPE model database was de
 
 #### Entity Relationship Diagram
 
+The diagram below is the entity relationship diagram (ERD) for the JPE model database.
+
+![](images/model_erd.png){ width=100% }
+
 #### Data Dictionaries
+
+Data dictionaries are [here](https://docs.google.com/document/d/1Gj_a40Xu3dOD6l7jLv59KSasZoqLRC4kG0qejMHsmqo/edit?usp=sharing) and will be integrated into this documentation.
 
 #### Quality Control
 
+Validation scripts are included as part of the EDI to JPE model database ETL process. (insert more details about validation process)
+
 #### Data Updates
+
+#### Repository Links
+
+* [Model database](https://github.com/SRJPE/jpe-db)
+
 
 ### DataTackle Database
 
@@ -118,11 +157,27 @@ Data Tackle refers to the electronic data entry system and associated cloud-base
 
 #### Entity Relationship Diagram
 
+The diagram below is the entity relationship diagram (ERD) for the DataTackle database.
+
+![](images/datatackle_erd.png){ width=100% }
+
 #### Data Dictionaries
+
+Data dictionaries are [here](https://docs.google.com/document/d/1MF3kaaRrQiO7NG4ltzkim9rHk4_H8kVgzyYJEalJKgI/edit?usp=sharing) and will be integrated into this documentation.
 
 #### Quality Control
 
+DataTackle contains extensive data validation to ensure data collected and entered are accurate. Additionally the application has a QC module to allow easy comparison of data points over time to identify outliers or errors.
+
 #### Data Updates
+
+Data collected via DataTackle are posted to the DataTackle database upon completion of data entry forms and internet connectivity. Data are updated on EDI at a weekly interval.
+
+#### Repository Links
+
+* [DataTackle database](https://github.com/SRJPE/rst-database)
+* [DataTackle application](https://github.com/SRJPE/rst-pilot-app-client)
+* [DataTackle server](https://github.com/SRJPE/jpe-app-server)
 
 ### Run ID Database
 
@@ -134,6 +189,11 @@ Data Tackle refers to the electronic data entry system and associated cloud-base
 
 #### Data Updates
 
+#### Repository Links
+
+* [grunID (Data entry tools)](https://github.com/SRJPE/grunID)
+* [Run ID database](https://github.com/SRJPE/run-id-database)
+
 ### R Packages
 
 The goal of the SRJPEdata package is to process data into the format required by SR JPE models so the package can easily be loaded and referenced within the SRJPEmodel package. Both R packages contain extensive documentation about data processing, rulesets, and models. 
@@ -141,3 +201,8 @@ The goal of the SRJPEdata package is to process data into the format required by
 #### Quality Control
 
 #### Data Updates
+
+#### Repository Links
+
+* [SRJPEdata R package](https://github.com/SRJPE/SRJPEdata)
+* [SRJPEmodel R package](https://github.com/SRJPE/SRJPEmodel)
