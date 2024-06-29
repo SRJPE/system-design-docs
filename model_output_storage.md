@@ -30,9 +30,13 @@ The user works within the SRJPE model package to run the model code. The model o
 
 ### Proposed Solution
 
-- Create a blob storage for the model fit 
+- Create a blob storage for the model fit. I do not think that the file name will matter as we will be storing metadata in the SRJPE database. One item to keep in mind is if we want to have a version structure for the filenames or a unique identifier for each file. 
 
-- Add a table to SRJPE database that includes metadata about the model as well as key parameters from the output file and a field that can be used to locate the model fit object that will be stored in blob storage.
+- Add a table to SRJPE database that includes metadata about the model as well as key parameters from the output file and a field that can be used to locate the model fit object that will be stored in blob storage. See the ERD (tab Model Fits). I don't have the whole review process for "approved" model fits worked out so don't think we should complicate it too much now. I decided to structure the table as a long table where there will be multiple rows for each model/site/year/week based on the parameter and statistic. I couldn't think of any tradeoffs of why one way was better so thought longer was cleaner.
+
+- Making model output available in SRJPEdata: We will need to create a pull data script to pull the output data into the SRJPEdata package to make it available. This information will be helpful for plotting in the dashboard and for making results available. Most users will not need the full model fit.
+
+- Making model fits available: We need to create a function for a user to connect to the blob storage and access the most up to date fit object. If we make the file name useful we won't have to connect to the database first and can just pull directly from the blob. The users here will be FlowWest when we run the models or modelers like Josh. Might be easier to make a public blob storage so we don't have to deal with authentication. 
 
 ### Alternative Solution
 
@@ -48,14 +52,16 @@ The user works within the SRJPE model package to run the model code. The model o
 
 ### Tasks
 
-1. Add new table to database
-2. Create blob storage
-3. Write function to connect to the storage and database via the SRJPEmodel package
-4. Test workflow internally
-5. Test workflow with modelers 
+1. Add new table to database (Emanuel or Inigo)
+2. Create blob storage (Emanuel or Inigo)
+3. Pull table from database into SRJPEmodel package (Ashley)
+4. Write a function for accessing the model fit object in blob storage to be used in the SRJPEmodel package (Emanuel or Liz)
+4. Test workflow internally (Liz and Ashley)
+5. Test workflow with modelers (Liz and Ashley)
 
 ### Timeline
 
 - Week of July 1: Review design doc
-- Week of July 8: Add table and blob storage, write function, test internally
-- Week of July 15: Test workflow with modelers
+- Week of July 8: Add table and blob storage, pull data to SRJPEdata, write function for SRJPEmodel
+- Week of July 15: Test internally
+- Week of July 22: Test with modelers
