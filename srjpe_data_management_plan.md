@@ -2,7 +2,7 @@
 
 The goal of this document is to describe the data used in SR JPE modeling and how those data are being managed for usability, accessibility, interoperability, and near real-time updates of the SR JPE models. 
 
-This document is still a work in progress and iteratively updated (and in some places incomplete).
+This is a living document and will be iteratively updated.
 
 Please contact Ashley Vizek (avizek@flowwest.com) with questions regarding this documentation.
 
@@ -19,9 +19,9 @@ The SR JPE data management system is comprised of a suite of data storage, proce
 Data from different SR JPE system components are integrated and made available and usable for SR JPE modeling through the SRJPEdata R package. The SRJPEmodel package contains model code that relies on data inputs prepared in the SRJPEdata package.
 
 
-![](images/system_architecture_overview.png){ width=50% }
+![](images/system_architecture_overview.png)
 
-## Existing Data Resources {.tabset}
+## Existing Data Resources
 
 The SR JPE utilizes the following types of data:
 
@@ -38,42 +38,41 @@ For each data type, the sections below describe where the data are derived from 
 
 #### Source Data
 
-Salmonid monitoring data are collected and managed by the California Department of Fish and Wildlife (CDFW), Department of Water Resources (DWR), and US Fish and Wildlife (USFWS). FlowWest supported each program in making data publicly available via the Environmental Data Initiative (EDI). All RST data are now available on EDI, and adult data are expected to be available by the end of March (Table 1). 
+Salmonid monitoring data are collected and managed by the California Department of Fish and Wildlife (CDFW), Department of Water Resources (DWR), and US Fish and Wildlife (USFWS). FlowWest supported each program in making data publicly available via the Environmental Data Initiative (EDI). All RST data are now available on EDI (Table 1). 
 
 Currently, these data are collected in the field using paper field sheets and entered into a local Access database. The SR JPE system utilizes the publicly available data resource and has developed an extract-transform-load (ETL) process for downloading data from EDI, processing the data into a standard format that allows integration across streams, and loading that data into a PostgreSQL database within the California Natural Resource Agency Microsoft Azure Resource Group[^1] on a biweekly schedule. 
 
 [^1]: System design documents for the SR JPE data management infrastructure exist if more detailed information is needed. 
 
-Deer and Mill creeks are in the process of transitioning to an electronic data collection system for rotary screw trap (RST) data where data are entered in a data collection application called DataTackle and posted to a cloud-based database in Microsoft Azure. Ultimately, other programs may transition to DataTackle as it improves data quality, eliminates data entry time, and streamlines data access.
+Deer and Mill creeks, and Feather and Yuba rivers are currently using an electronic data collection system for rotary screw trap (RST) data where data are entered in a data collection application called DataTackle and posted to a cloud-based database in Microsoft Azure. Ultimately, other programs may transition to DataTackle as it improves data quality, eliminates data entry time, and streamlines data access.
 
 *Table 1. Describes data resources for salmon monitoring data by watershed. Metadata is available at the EDI link specified within the table.*
 
 | Watershed | Rotary Screw Trap Data | Adult Monitoring Data |
 | --------- | ---------------------- | --------------------- |
-| Battle Creek | [edi.1509](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1509.1) | EDI package |
-| Butte Creek | [edi.1497](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1497.1) | EDI package |
-| Clear Creek | [edi.1509](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1509.1) | EDI package |
-| Deer Creek | [edi.1504](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1504.1) | EDI package |
-| Feather River | [edi.1239](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1239.6) | EDI package |
-| Mill Creek | [edi.1504](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1504.1) | EDI package |
-| Sacramento River | [edi.1501](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1501.1) | No adult data |
-| Yuba River | [edi.1529](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1529.2) | EDI package |
+| Battle Creek | [edi.1509](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1509.1) | EDI publication in progress |
+| Butte Creek | [edi.1497](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1497.1) | Refer to [GrandTab](https://wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment) |
+| Clear Creek | [edi.1509](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1509.1) | EDI publication in progress  |
+| Deer Creek | [edi.1504](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1504.1) | [edi.1672](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1672.1) |
+| Feather River | [edi.1239](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1239.6) | EDI publication in progress  |
+| Mill Creek | [edi.1504](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1504.1) | [edi.1672](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1672.1) |
+| Sacramento River | [edi.1501](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1501.1) | No spring run adult data |
+| Yuba River | [edi.1529](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1529.2) | [edi.1701](https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1707.1) |
 
 #### Quality Control
 
-Each monitoring program performs there own QC on data which often includes manual checks when entering data and end of season checks. FlowWest conducted QC on historical datasets when received from monitoring programs (see [JPE-datasets repository](https://github.com/SRJPE/JPE-datasets)).
+Each monitoring program performs there own QC on data which often includes manual checks when entering data and end of season checks. 
+FlowWest conducted QC on historical datasets when received from monitoring programs which included visualizations of all variables included in the dataset and consistency checks for categorical variables.
 
 #### Data Updates
 
 The RST EDI packages described in Table 1 are updated on a biweekly schedule. On the second and fourth Wednesdays of each month, Data Stewards export data and email to data@flowwest.com to initiate an automated update process for their EDI package[^2]. This process is needed to facilitate near real-time updates to SR JPE models.
 
-[^2]: This process is managed within Microsoft Azure and also utilizes Github Actions. Instructions for exporting and emailing data are included as an Appendix. Please contact X for more information.
+[^2]: This process is managed within Microsoft Azure and also utilizes Github Actions. Instructions for exporting and emailing data are included as an Appendix. Please contact Ashley Vizek (avizek@flowwest.com) for more information.
 
 Data uploaded within a monitoring season are considered provisional as additional QC is conducted at the end of the monitoring season.
 
 #### Repository Links
-
-* [Initial data QC and processing](https://github.com/SRJPE/JPE-datasets)
 
 Prepare RST data for publication
 
@@ -86,17 +85,29 @@ Prepare RST data for publication
 * [Sacramento River Delta Entry RST EDI package](https://github.com/SRJPE/jpe-delta-entry-edi)
 * [Yuba River RST EDI package](https://github.com/SRJPE/jpe-yuba-edi)
 
-Prepare adult data for publication (to be added when published)
+Prepare adult data for publication
 
-### Coded Wire Tag Data
+* [Deer and Mill creeks adult monitoring EDI package](https://github.com/SRJPE/jpe-deer-mill-adult-edi)
+* [Yuba River adult monitoring EDI package](https://github.com/SRJPE/jpe-yuba-adult-edi)
+
+### Acoustic Telemetry Data
 
 #### Source Data
 
+Acoustic telemetry data is critical for the SR JPE to understand and model survival. Data are sourced from [CalFishTrack](https://oceanview.pfeg.noaa.gov/CalFishTrack/),
+the Central Valley Enhanced Acoustic Tagging Project. 
+
 #### Quality Control
+
+QC is handled by CalFishTrack
 
 #### Data Updates
 
+Data are available via APIs. The data update process of these existing datasets is not facilitated through SR JPE.
+
 #### Repository Links
+
+Data are not published as part of SR JPE and already exist on [CalFishTrack](https://oceanview.pfeg.noaa.gov/CalFishTrack/).
 
 ### Flow and Temperature Data
 
@@ -105,6 +116,8 @@ Prepare adult data for publication (to be added when published)
 Flow and water temperature are important covariates in many aspects of SR JPE, and exist in multiple repositories. Often there are multiple data sources for a given watershed and we have worked to identify the data source of highest quality, with fewest data gaps, that is more representative of a particular habitat type. Currently, these data are not stored in an SR JPE database to reduce redundancy and instead are pulled into the SRJPEdata package via an API. 
 
 #### Quality Control
+
+QC is handled by USGS and CDEC
 
 #### Data Updates
 
@@ -122,9 +135,9 @@ Covariate data is available via APIs through USGS or CDEC. The data update proce
 
 #### Repository Links
 
-## SR JPE Data Resources {.tabset}
+## SR JPE Data Resources
 
-The SR JPE has created a number of data resources for integrating, managing, storing, and making data accessible for use. The first step in integrating disparate data was to make those datasets publicly available (see Table 1, insert table for genetics data). Data could then be pulled from these public repositories and integrated for use in SR JPE modeling. We utilize a suite of PostgreSQL databases hosted on Microsoft Azure and in all cases the data stored in the databases can be accessed through EDI. To make the data readily usable for SR JPE modeling we created an R data package called SRJPEdata and to run SR JPE models we compiled and functionalized model code developed by SR JPE modelers including Josh Korman, Flora Cordoleani, Liz Stebbins, and Noble Hendrix. 
+The SR JPE has created a number of data resources for integrating, managing, storing, and making data accessible for use. The first step in integrating disparate data was to make those datasets publicly available (see Table 1, insert table for genetics data when published). Data could then be pulled from these public repositories and integrated for use in SR JPE modeling. We utilize a suite of PostgreSQL databases hosted on Microsoft Azure and in all cases the data stored in the databases is made publically available through EDI. To make the data readily usable for SR JPE modeling we created an R data package called SRJPEdata and to run SR JPE models we compiled and functionalized model code developed by SR JPE modelers including Josh Korman, Flora Cordoleani, Liz Stebbins, and Noble Hendrix. 
 
 ### SR JPE Model Database
 
@@ -134,7 +147,7 @@ The SR JPE requires data from multiple sources. The SR JPE model database was de
 
 The diagram below is the entity relationship diagram (ERD) for the JPE model database.
 
-![](images/model_erd.png){ width=100% }
+![](images/model_erd.png)
 
 #### Data Dictionaries
 
@@ -153,13 +166,13 @@ Validation scripts are included as part of the EDI to JPE model database ETL pro
 
 ### DataTackle Database
 
-Data Tackle refers to the electronic data entry system and associated cloud-based database for RST data. In comparison to data collected on field data sheets, Data Tackle improves data quality, eliminates data entry time, and streamlines data access resulting in real-time access to RST data. Ideally, all spring run tributaries will utilize Data Tackle; though, currently only Deer and Mill creeks are actively using this system with plans for Feather and Yuba rivers to be onboarded during the 2024 monitoring season and fully transitioned by the 2025 monitoring season.
+DataTackle refers to the electronic data entry system and associated cloud-based database for RST data. In comparison to data collected on field data sheets, DataTackle improves data quality, eliminates data entry time, and streamlines data access resulting in real-time access to RST data. Ideally, all spring run tributaries will utilize DataTackle; though, currently only Deer and Mill creeks and Feather and Yuba rivers are actively using this system with plans for Battle and Clear creeks to be onboarded.
 
 #### Entity Relationship Diagram
 
 The diagram below is the entity relationship diagram (ERD) for the DataTackle database.
 
-![](images/datatackle_erd.png){ width=100% }
+![](images/datatackle_erd.png)
 
 #### Data Dictionaries
 
@@ -200,7 +213,30 @@ The goal of the SRJPEdata package is to process data into the format required by
 
 #### Quality Control
 
+The R packages contain a number of test to identify data issues and errors in the codebase. 
+We are continually working to improve the unit tests and have work planned for the fall of 2025.
+Additionally, we aim to meet with Stream Teams to do data checks quarterly through 2026.
+
 #### Data Updates
+
+SR JPE models are envisioned to be adaptive and incorporate the best available science. As new data is collected and our understanding of the system continues to evolve, SR JPE models will be updated to reflect these changes. Anticipated updates to SR JPE models range from simply refitting coefficients for current models with updated datasets to testing new model structures and new covariates as they are developed and the salmon ecosystem and our understanding of it evolves. Following is the proposed workflow to update datasets to support model updates and to support regular running of the models to produce SR JPE forecasts. In general, datasets will be updated as described below for the expected types of model updates and associated timescales:
+
+**Annual end of the outmigration season updates (June-July)**
+
+At the end of each outmigration season, and prior to the initiation of the next juvenile outmigration season, model coefficients will be updated using updated datasets. All data sources that are pulled in and integrated within the SRJPEdata R package are updated regularly on EDI as data is logged. The main goal of the SRJPEdata package is to make data available for SR JPE modeling so the data only need to be updated when they are needed for modeling. A longer-term goal would be to set up automated updates to keep the SRJPEdata package as up to date as possible. Currently, at the end of the monitoring season, a new year of RST catch, genetics, and survival data will be available in the SRJPEdata package by July. The following models can then be updated with the new data:
+
+* BTSPAS-X
+* P2S
+* Survival
+* PLAD
+
+**Annual end of adult upstream migration/spawning season updates (December-January)**
+
+Unlike the regular RST EDI packages, adult packages are only updated annually and therefore there is not an automated pipeline for adult data updates as there is for RST data. Data update protocols exist for each monitoring program’s EDI package, and the Data Management Team will work with the Data Stewards to update the adult EDI packages as soon as possible each season, which will typically occur in December. After the EDI packages have been updated (or if an EDI package does not yet exist, data have been provided by Stream Teams) these data will be pulled into the SRJPEdata package for modeling. At this point the Stock Recruit models can be updated.
+
+**Within juvenile outmigration season updates (January - April)**
+
+Some models require datasets to be updated during the outmigration season. Updates to RST, genetic, and some physical covariate datasets will be repeated as often as weekly during the outmigration season for the PLAD and BT-SPAS-X models. These datasets and perhaps additional physical covariate datasets will be updated on February 1, March 1, and April 1 for the In-season Outmigrant and Integrated JPE models, which are the current dates configured for SR JPE forecasts. These same steps will be taken for new SR JPE forecast dates as they are established to support specific minimization measures. 
 
 #### Repository Links
 
