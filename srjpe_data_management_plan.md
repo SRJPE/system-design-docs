@@ -61,7 +61,7 @@ Deer and Mill creeks, and Feather and Yuba rivers are currently using an electro
 
 #### Quality Control
 
-Each monitoring program performs there own QC on data which often includes manual checks when entering data and end of season checks. 
+Each monitoring program performs their own QC on data which often includes manual checks when entering data and end of season checks. 
 FlowWest conducted QC on historical datasets when received from monitoring programs which included visualizations of all variables included in the dataset and consistency checks for categorical variables.
 
 #### Data Updates
@@ -99,7 +99,7 @@ the Central Valley Enhanced Acoustic Tagging Project.
 
 #### Quality Control
 
-QC is handled by CalFishTrack
+QC is handled by CalFishTrack.
 
 #### Data Updates
 
@@ -117,7 +117,7 @@ Flow and water temperature are important covariates in many aspects of SR JPE, a
 
 #### Quality Control
 
-QC is handled by USGS and CDEC
+QC is handled by the U.S. Geological Survey (USGS) and the California Data Exchange Center (CDEC).
 
 #### Data Updates
 
@@ -129,11 +129,23 @@ Covariate data is available via APIs through USGS or CDEC. The data update proce
 
 #### Source Data
 
+The genetics monitoring season begins with a sample plan, which details sampling dates for each sample site. These are used to generate unique sample IDs for individual fish which are seeded into the database. Throughout the field season, each sampled fish is measured (fork length) and a genetic sample taken (either fin clip or mucus). These field results are uploaded to the database and tracked through sample ID.
+
+Genetic samples are processed with one of (or both) lab protocols: SHERLOCK or GT-SEQ. Raw results from each protocol are stored in the database and a ruleset is applied that determines a genetic run assignment and population ID based on the results of the protocol. 
+
+The genetic lab inputs a sample plan, field sheet data (fork length and field run ID), and assay results. The grunID R package is an app that automatically generates field sheets for data entry, processes field sheets, uploads and stores assay results, and applies the rulesets to assign run identification to each sampled fish. Future output will include an EDI package that contains the sample ID, date collected, fork length, and run identification.
+
 #### Quality Control
+
+Quality control is first performed by the genetic lab. The grunID package has several QC steps to eliminate redundancies and identify anomalies in data entry or results, identifying these to the user.
 
 #### Data Updates
 
+There is no EDI package available for the genetic assignment data yet, but as methodology is finalized the results will be hosted on EDI and updated biweekly. Biweekly results will also be made available as a data object in the SRJPEdata R package.
+
 #### Repository Links
+
+To be updated.
 
 ## SR JPE Data Resources
 
@@ -196,9 +208,17 @@ Data collected via DataTackle are posted to the DataTackle database upon complet
 
 #### Entity Relationship Diagram
 
+The diagram below is the entity relationship diagram (ERD) for the run ID database. It is in the process of being updated.
+
+![](images/genetics_erd.png)
+
 #### Data Dictionaries
 
+Data dictionaries for the run ID database are in development.
+
 #### Quality Control
+
+Data undergo QC in the field sheet upload, assay result upload, and run assignment workflows through the grunID application.
 
 #### Data Updates
 
