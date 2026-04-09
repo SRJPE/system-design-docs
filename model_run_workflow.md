@@ -6,10 +6,10 @@ The SR JPE will ultimately be fully transparent through open and reproducible mo
 The first SR JPE will be produced for water year 2027 expected to be available January 2027. The long term and stable infrastructure that will be used to produce the SR JPE on a regular basis is still undergoing active development (as of April 2026) and is expected to continue throughout 2026. This does not prevent the development of a SR JPE. It means that there will be two workflows - (1) the **near-term workflow** meets the immediate need of producing a 2027 SR JPE and needs around manuscript publication related to the SR JPE models, (2) the **regular SR JPE workflow** describes the ultimate step-by-step process that will be used to produce SR JPE on a regular and automated schedule into the future. The near-term workflow will include detailed step-by-step instructions and the guide for the regular workflow will continue to be built out.
 
 **Key Resources**
-- [SRJPE GitHub Organization](https://github.com/SRJPE) is where all code is stored, versioned and made accessible
-- [SR JPE Data Management Plan](https://github.com/SRJPE/system-design-docs/blob/main/srjpe_data_management_plan.md) a working document that describes data sources and products as well as the full data and model system for the SR JPE. The SOP is a companion document. The DMP documents the full data lifecycle whereas the SOP is focused on the instructions for producing and updating a SR JPE.
-- [SRJPEdata R package](https://github.com/SRJPE/SRJPEdata) R data package for data inputs to SR JPE models. This has been in active development alongside model code as new data needs arise. Ultimately this package will include tagged releases and DOI associated with manuscript publication and SR JPE estimates.
-- [SRJPEmodel R package](https://github.com/SRJPE/SRJPEmodel) R package with functions for running models. This package is in active development and not all models are included yet. This will continue to be developed as model code stabilizes.
+- (SRJPE GitHub Organization)[https://github.com/SRJPE] is where all code is stored, versioned and made accessible
+- (SR JPE Data Management Plan)[https://github.com/SRJPE/system-design-docs/blob/main/srjpe_data_management_plan.md] a working document that describes data sources and products as well as the full data and model system for the SR JPE. The SOP is a companion document. The DMP documents the full data lifecycle whereas the SOP is focused on the instructions for producing and updating a SR JPE.
+- (SRJPEdata R package)[https://github.com/SRJPE/SRJPEdata] R data package for data inputs to SR JPE models. This has been in active development alongside model code as new data needs arise. Ultimately this package will include tagged releases and DOI associated with manuscript publication and SR JPE estimates.
+- (SRJPEmodel R package)[https://github.com/SRJPE/SRJPEmodel] R package with functions for running models. This package is in active development and not all models are included yet. This will continue to be developed as model code stabilizes.
 
 ## Near-Term Workflow
 
@@ -19,7 +19,7 @@ There are five submodels in the SR JPE - BTSPAS-X, survival (and travel time), P
 
 The goals for this workflow are (1) store, version, document, and make data and code open and transparent for the 2027 SR JPE, (2) organize code and data in preparation for publication in scientific journals, (3) enable a nimble workflow while components of the regular SR JPE system are being developed.
 
-All code related to the SR JPE is stored and versioned on GitHub in the SRJPE Organization. To meet the needs of this workflow, there is a repository for each model (btspasx, survival, plad, stockrecruit, withinseason, integratedjpe) with the following file structure. The [model-code-template](https://github.com/SRJPE/model-code-template) repository can be used as a template. The template includes .md files with best practices.
+All code related to the SR JPE is stored and versioned on GitHub in the SRJPE Organization. To meet the needs of this workflow, there is a repository for each model (btspasx, survival, plad, stockrecruit, withinseason, integratedjpe) with the following file structure. The (model-code-template)[https://github.com/SRJPE/model-code-template] repository can be used as a template. The template includes .md files with best practices.
 
 TODO review and discuss this structure
 - README.md: Explains what the code does and how to set up the environment as well as instructions to reproduce the paper's results
@@ -78,7 +78,7 @@ RST, flow, temperature, and adult data are in SRJPEdata. Acoustic telemetry and 
 
 ##### RST
 
-Currently, to update these data run [combine_database_pull_and_save.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/combine_database_pull_and_save.R). RST data are regularly pulled from EDI and loaded in the SR JPE model database for storage. These data are integrated with data being collected using DataTackle and stored in the DataTackle database as well as misfit data that need to be pulled directly from EDI. To update the data inputs for the BTSPASX model run [build_rst_model_datasets.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R)
+Currently, to update these data run (combine_database_pull_and_save.R)[https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/combine_database_pull_and_save.R]. RST data are regularly pulled from EDI and loaded in the SR JPE model database for storage. These data are integrated with data being collected using DataTackle and stored in the DataTackle database as well as misfit data that need to be pulled directly from EDI. To update the data inputs for the BTSPASX model run (build_rst_model_datasets.R)[https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R]
 
 **Expectation: Pull data by June 2026. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
 
@@ -90,7 +90,7 @@ Flora has not been relying on SRJPEdata for the acoustic telemetry data for the 
 
 ##### Flow 
 
-Environmental data (weekly aggregation) are prepared and stored in SRJPEdata. Flow data are used by BTSPASX and summarized flow data are used in the survival model. Currently, to update these data run [pull_environmental_data.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/pull_environmental_data.R) and [forecast_covariates.Rmd](https://github.com/SRJPE/SRJPEdata/blob/main/vignettes/forecast_covariates.Rmd) to update the summarized flow values for the survival model. To update the data inputs for the BTSPASX model run [build_rst_model_datasets.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R)
+Environmental data (weekly aggregation) are prepared and stored in SRJPEdata. Flow data are used by BTSPASX and summarized flow data are used in the survival model. Currently, to update these data run (pull_environmental_data.R)[https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/pull_environmental_data.R] and (forecast_covariates.Rmd)[https://github.com/SRJPE/SRJPEdata/blob/main/vignettes/forecast_covariates.Rmd] to update the summarized flow values for the survival model. To update the data inputs for the BTSPASX model run (build_rst_model_datasets.R)[https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R]
 
 **Expectation: There are gaps in the flow data and this would be a good opportunity to evaluate if better approaches could be used to fill these. This should be completed by end of May 2026 and data updated by June 2026. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
 
