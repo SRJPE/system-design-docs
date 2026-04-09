@@ -1,25 +1,25 @@
 # Standard Operating Procedure for the Central Valley Spring Run Chinook Salmon Juvenile Production Estimate (SR JPE SOP)
 *written by Ashley Vizek, updated April 6, 2026*
 
-The SR JPE will ultimately be fully transparent through open and reproducible model code and data that is updated weekly. The SR JPE will be updated on a regular basis throughout the water year as more data become available thus reducing uncertainty in JPE estimates. This document describes the seasonal workflow for updating data and running models to produce the SR JPE. 
+The SR JPE will ultimately be fully transparent through open and reproducible model code and data that is updated weekly. The SR JPE will be updated on a regular basis throughout the water year as more data become available with the goal of reducing uncertainty in JPE estimates. This document describes the seasonal workflow for updating data and running models to produce the SR JPE. 
 
-The first SR JPE will be produced for water year 2027. The long term and stable infrastructure that will be used to produce the SR JPE on a regular basis is still undergoing active development (as of April 2026) and is expected to continue throughout 2026. This does not prevent the development of a SR JPE. It means that there will be two workflows - (1) the **near-term workflow** meets the immediate need of producing a 2027 SR JPE and to publish manuscripts related to the SR JPE model, (2) the **regular SR JPE workflow** describes the ultimate step-by-step process that will be used to produce SR JPE on a regular and automated schedule into the future.
+The first SR JPE will be produced for water year 2027 expected to be available January 2027. The long term and stable infrastructure that will be used to produce the SR JPE on a regular basis is still undergoing active development (as of April 2026) and is expected to continue throughout 2026. This does not prevent the development of a SR JPE. It means that there will be two workflows - (1) the **near-term workflow** meets the immediate need of producing a 2027 SR JPE and needs around manuscript publication related to the SR JPE models, (2) the **regular SR JPE workflow** describes the ultimate step-by-step process that will be used to produce SR JPE on a regular and automated schedule into the future. The near-term workflow will include detailed step-by-step instructions and the guide for the regular workflow will continue to be built out.
 
 **Key Resources**
-- SRJPE GitHub Organization
-- SR JPE Data Management Plan
-- SRJPEdata R package
-- SRJPEmodel R package
+- [SRJPE GitHub Organization](https://github.com/SRJPE) is where all code is stored, versioned and made accessible
+- [SR JPE Data Management Plan](https://github.com/SRJPE/system-design-docs/blob/main/srjpe_data_management_plan.md) a working document that describes data sources and products as well as the full data and model system for the SR JPE. The SOP is a companion document. The DMP documents the full data lifecycle whereas the SOP is focused on the instructions for producing and updating a SR JPE.
+- [SRJPEdata R package](https://github.com/SRJPE/SRJPEdata) R data package for data inputs to SR JPE models. This has been in active development alongside model code as new data needs arise. Ultimately this package will include tagged releases and DOI associated with manuscript publication and SR JPE estimates.
+- [SRJPEmodel R package](https://github.com/SRJPE/SRJPEmodel) R package with functions for running models. This package is in active development and not all models are included yet. This will continue to be developed as model code stabilizes.
 
 ## Near-Term Workflow
 
-There are four submodels in the SR JPE - BTSPAS-X, survival, PLAD, and stock recruit - all of which come together in the integrated SR JPE model. The SR JPE model suite underwent peer-review in the winter of 2026, and models are currently undergoing active development and modifications. Modelers are also working to draft manuscripts for publication. In the background data scientists at FlowWest are working to functionalize model code and develop a data and model system that can be updated on a regular automated schedule. This full system (described in the "regular SR JPE workflow" section) may not be fully functional by January 2027, and we do not want it to get in the way of more immediate needs which is why we developed the "near-term workflow." The main differences between these two workflows are that model code is not fully functionalized in SRJPEmodel, data objects may not be fully available in SRJPEdata, the procedure for running regular automated updates is not defined, and the "near-term workflow" prioritizes code and data publication for manuscripts.
+There are five submodels in the SR JPE - BTSPAS-X, survival (and travel time), PLAD, stock recruit, and within season outmigrant - all of which come together in the integrated SR JPE model. The SR JPE model suite underwent peer-review in the winter of 2026, and models are currently undergoing active development and modifications. Modelers are also working to draft manuscripts for publication. In the background data scientists at FlowWest are working to functionalize model code and develop a data and model system that can be updated on a regular automated schedule. This full system (described in the "regular SR JPE workflow" section) may not be fully functional by January 2027, and we do not want it to get in the way of more immediate needs which is why we developed the near-term workflow. The main differences between these two workflows are that model code is not fully functionalized in SRJPEmodel, data objects may not be fully available in SRJPEdata, the procedure for running regular automated updates is not defined, and the near-term workflow prioritizes code and data publication for manuscripts.
 
 ### Overview
 
 The goals for this workflow are (1) store, version, document, and make data and code open and transparent for the 2027 SR JPE, (2) organize code and data in preparation for publication in scientific journals, (3) enable a nimble workflow while components of the regular SR JPE system are being developed.
 
-All code related to the SR JPE is stored and versioned on GitHub in the SR JPE Organization. To meet the needs of this workflow, there is a repository for each model (btspasx, survival, plad, stockrecruit, integratedjpe) with the following file structure:
+All code related to the SR JPE is stored and versioned on GitHub in the SRJPE Organization. To meet the needs of this workflow, there is a repository for each model (btspasx, survival, plad, stockrecruit, withinseason, integratedjpe) with the following file structure. The [model-code-template](https://github.com/SRJPE/model-code-template) repository can be used as a template. The template includes .md files with best practices.
 
 TODO review and discuss this structure
 - README.md: Explains what the code does and how to set up the environment as well as instructions to reproduce the paper's results
@@ -28,64 +28,153 @@ TODO review and discuss this structure
 - data: Includes raw data files or if data files are too large where to access
 - results: Output figures and tables
 
-Before publication we will integrate [Zenodo](https://zenodo.org/) to generate a DOI for the repositories: 
+Before publication we will integrate [Zenodo](https://zenodo.org/) to generate a DOI for the repositories and SRJPEdata.
 
-1. Update data and data checks (RST and associated rulesets, acoustic telemetry for survival, adult data) - April-May
+### Ongoing Development
 
+#### 1. Model Updates
 
-2. PLAD
+Starting January 2026 models (and data) have been undergoing updates and modifications in response to the peer-review and in preparation for manuscript publication resolve lingering issues. Development is expected to continue through June 2026. Please refer to the working list of updates (INSERT LINK TO GOOGLE DOC).
 
-?
+#### 2. Model Code
 
-3. BTSPAS-X
+In addition to the model updates, during this time it is expected that all model code will be uploaded to the respective repository on GitHub (as discussed in the previous section). Ideally, modelers will version their updates; however, at the very least functional, publication-ready code will be available. It is expected that the code will be reproducible and FlowWest will test this by attempting to reproduce results for each model repository. FlowWest will support this process as needed including - implementing package versioning through `renv`, helping document code, providing scripts and workflows to large file and model fit storage, versioning data objects available in SRJPEdata, troubleshooting data issues.
 
-List from Josh -
+**Expectation: All model code published to respective GitHub repository by end of June 2026.**
 
-I think these are done:
-- Do runs for Feather LFC. Requires code in BT-SPAS-X project to generate all run and spring run weekly estimates for a site called. Requires grabbing data from different trapping sites across years (eye, steep, gateway). This code would document what RST site was used for each year to create Feath_LFS_yyyy.Rdata.
-- Get PLAD results for eye riffle to do above
-- Run model for missing KL years (2003-2006). Copy PLAD results from any other KL year and rename to these years.
-- Copy PLAD results from any hallwood year to years with no PLAD estimates owing to a data naming mixup (Yuba/Hallwood).
+#### 3. Testing Model Code
 
-Not done:
-- Estimate abundance at other mainstem trapping sites. Lower Feather and Delta Entry for sure, and maybe RBDD.
-- Consider a BT-SPAS-X redesign (depending on independent review) where we ditch the across-site hierarchy, and estimate at the site-level, but jointly estimati all years from the site, and jointly estimate capture probability model and abundance parameters.
-- One of reasons for above approach is to estimate a flow effect on weekly abundances  (i.e., a fixed effect other than b-splile). Multi-year joint analysis almost certainly needed to estimate the flow effect. A big lift. Maybe before jumping into this big task, look at the number of missing weeks resulting from high flows. Perhaps not a big enough issue to pursue.
+FlowWest will work with modelers to test model code, ensuring that it is reproducible and meets the best practices for publication-ready code. 
 
-4. Survival and travel time
+**Expectation: All model code will be tested, reproducible, and publication-ready by end of July 2026**
 
-From Josh:
+#### 4. Integrated SR JPE
 
-Done:
-- Work with Ashley to get CWT release data into srJPEdata.
+The development of an integrated SR JPE will require a number of decision points including:
 
-Not done or in progress:
-- Add code to JPE model project that predicts weekly abundance of hatchery fish to Sac (the hatchery model).
-- Work with Flora to compare abundance and timing of hatchery fish at downstream locations (HFC, lower Feather?) Also compare predictions with existing CWT analysis results (Jason et al.), or get that data if we need to for more specific comparisons.
-- Work with Flora to revise survival/TT model to make predictions for Tisdale and Knights Landing for JPE vs. observed outmigrant abundance and timing at these two traps (almost complete). 
+- For stock recruit modeling: (1) what if adult data are not available, (2) what covariate is used
+- For integrated model: (1) what prior is used if adult data are not available, (2) what forecast covariate is used
 
-5. Stock recruit
+FlowWest will work with modelers to find resolution on these decision points and document them here.
 
-From Josh:
-- With annual outmigrant estimates from Feath_LFC series (see above), fit models and add to covariate analysis for other sites. 
-- Refit stock-recruitment models from other sites because input data has changed and new data has been added (e.g., run model on most recent set of tributary BT-SPAS-X/PLAD output).
+**Expectation: The integrated SR JPE will be functional and decision points documented by end of August 2026**
 
-6. Within season
+### 2027 SR JPE 
 
-- Add-in Feather (natural) component using Feath_LFC series
-- Update model for all sites based on most recent BT-SPAS-X/PLAD outmigrant estimates
-- Evaluate alternate covariates on median run date (only one evaluated to date) and run steepness (none were evaluated.
+After the period of active development and preparation for manuscript publication concludes in August 2026, preparation for developing the 2027 SR JPE will begin. 
 
-7. Model testing
+#### 1. Data updates
 
-- Add code to use Tis and KL-specific survival and travel time predictions from revised mainstem/TT model (new scripts named DS_Surv_TK and Arrival_Timing_TK.R)
-- Update JPE vs observed Tis/KL timing comparison, and do something similar for abundances. The former would be new. This would compare observed historical average annual spring run outmigrant abundance at Tis/KL with predictions from JPE (tributaries + downstream survival). The problem here is apples-oranges comparison among years (same issue for timing comparison).
-- Thus, for both timing and abundance JPE vs Tis/KL, do the analysis by year. Find years with outmigrant abundance at ucc, ubc, mill, deer, and at Tis or KL. Route the observed RST abundance to mainstem trap sites, and compare with observations of abundance and timing in that year. Should we use the release group deviates for the year being compared for mainstem model?
-- If you establish a good correspondence based on year-specific analysis, then make a forecast for that year and repeat the comparison.
+For the 2027 SR JPE to use the best available information, a number of data need to be updated first.
 
+- RST (including efficiency trials) for BTSPASX (stock recruit and within season depend on this)
+- Acoustic telemetry for survival/travel time model
+- Flow for BTSPAXX
+- Temperature (TBD how this is being used)
+- Genetics data for PLAD
+- Adult data for the stock recruit
 
-8. Integrated JPE
+RST, flow, temperature, and adult data are in SRJPEdata. Acoustic telemetry and genetics data are in the process of being in SRJPEdata. The sections below specify how to update each data type. For data in SRJPEdata, running [update_data.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/update_data.R) will update all data in the package.
 
+##### RST
+
+Currently, to update these data run [combine_database_pull_and_save.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/combine_database_pull_and_save.R). RST data are regularly pulled from EDI and loaded in the SR JPE model database for storage. These data are integrated with data being collected using DataTackle and stored in the DataTackle database as well as misfit data that need to be pulled directly from EDI. To update the data inputs for the BTSPASX model run [build_rst_model_datasets.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R)
+
+**Expectation: Pull data by June 2026. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
+
+##### Acoustic telemetry
+
+Flora has not been relying on SRJPEdata for the acoustic telemetry data for the survival model. If that is still the case in August 2026, work with Flora to ensure data can be updated in the `survival` repository using her data prep code. Ideally, however, we will transition Flora to pulling directly from SRJPEdata for these data. The data prep process is currently in development and should be finished by June.
+
+**Expectation: Pull survival data using SRJPEdata and check this with Flora by June 2026. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
+
+##### Flow 
+
+Environmental data (weekly aggregation) are prepared and stored in SRJPEdata. Flow data are used by BTSPASX and summarized flow data are used in the survival model. Currently, to update these data run [pull_environmental_data.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/pull_environmental_data.R) and [forecast_covariates.Rmd](https://github.com/SRJPE/SRJPEdata/blob/main/vignettes/forecast_covariates.Rmd) to update the summarized flow values for the survival model. To update the data inputs for the BTSPASX model run [build_rst_model_datasets.R](https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/process_data_scripts/build_rst_model_datasets.R)
+
+**Expectation: There are gaps in the flow data and this would be a good opportunity to evaluate if better approaches could be used to fill these. This should be completed by end of May 2026 and data updated by June 2026. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
+
+##### Genetics data
+
+Genetics data are stored in the runid database. FlowWest has been working the DWR GEM Lab to streamline the data processing and upload process and publish these data on EDI. We have not yet finalized the data structure (primarily the ruleset used for run determination) and have not published the data on EDI. When the data are published on EDI they will be integrated into the SRJPEdata package and updated on a regular basis. We need to develop a script to pull the most recent data from EDI.
+
+**Expectation: By end of June 2026, genetics data are published on EDI, an R script to pull these data into SRJPEdata is developed and tested. Implement an automated workflow through GitHub Actions to run this script on a schedule by September 2026. Ensure all data have been updated! This is not critical for 2027 SR JPE but will help with biweekly data and model updates**
+
+##### Adult data
+
+FlowWest worked with data collectors to publish adult datasets on EDI though due the inconsistent and challenging structure of these datasets was only successful in publishing Yuba River adult passage estimates to EDI. Adult data are used in SR JPE stock recruit modeling and need to be updated ASAP in December-January. Beginning December 1 FlowWest will email data contacts (see below) to prepare for this data need and include the expected data type and structure. TODO INSERT MORE DETAILS HERE. The (pull_adult_data.R)[https://github.com/SRJPE/SRJPEdata/blob/main/data-raw/pull_data_scripts/pull_adult_data.R] will need to be updated and then run to update SRJPEdata. In some cases, like for the Yuba River, adult data may not be available in time for the SR JPE stock recruit.
+
+**Expectation: Data outreach for SR JPE adult data begins December 2026 and data are integrated by January 1 2026**
+
+#### 2. Model fit updates
+
+##### BTSPASX
+
+TODO insert links when available
+
+This can begin June 2026.
+
+- Pull in updated data by running data prep script (insert link)
+- Run BTSPASX (insert instructions on how to do this or refer to readme in the repo)
+- QC output (TODO what does the QC process look like)
+
+**Expectation: Model refit and QC by August 2026**
+
+##### Survival and travel time
+
+TODO insert links when available
+
+This can begin June 2026.
+
+- Pull in updated data by running data prep script (insert link)
+- Run survival and travel time model (insert instructions on how to do this or refer to readme in the repo)
+- QC output (TODO what does the QC process look like)
+
+**Expectation: Model refit and QC by August 2026**
+
+##### PLAD
+
+TODO insert links when available
+
+This can begin June 2026.
+
+- Pull in updated data by running data prep script (insert link)
+- Run PLAD (insert instructions on how to do this or refer to readme in the repo)
+- QC output (TODO what does the QC process look like)
+
+**Expectation: Model refit and QC by August 2026**
+
+##### Stock recruit
+
+TODO insert links when available
+
+This can begin January 2026.
+
+- Pull in updated data by running data prep script (insert link)
+- Run stock recruit (insert instructions on how to do this or refer to readme in the repo)
+- QC output (TODO what does the QC process look like)
+
+**Expectation: Model refit and QC by January 15 2026**
+
+##### Within season
+
+TODO insert links when available
+
+This can begin January 15 2026 (? does this need to happen)
+
+- Pull in updated data by running data prep script (insert link)
+- Run within season (insert instructions on how to do this or refer to readme in the repo)
+- QC output (TODO what does the QC process look like)
+
+**Expectation: Model refit and QC by February 2026**
+
+#### 3. Model run process
+
+TODO outline the steps and insert links when available
+
+- Run monthly beginning in February
+- Document decision process of what to use for covariates and what to do if adult data not available
+- As new RST and flow data become available does BTSPASX need to be updated?
 
 ## Regular SR JPE Workflow
 
