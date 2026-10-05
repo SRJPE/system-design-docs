@@ -4,7 +4,7 @@
 
 This template is for a **pre-proposal** for modifications to SR JPE models. Less detail is expected in a pre-proposal than a full proposal. Please provide one form per modification and submit to the Science Coordinator (currently, Brett Harvey, DWR; brett.harvey@water).
 
-This template is based on the [CVPIA SIT](https://iris.fws.gov/APPS/ServCat/DownloadFile/299567) template and process. The SR JPE Model Modification Process is described here.
+This template is based on the [CVPIA SIT](https://iris.fws.gov/APPS/ServCat/DownloadFile/299567) template and process. The SR JPE Model Modification Process is described [here](https://github.com/SRJPE/system-design-docs/blob/main/model_modification_process.md).
 
 1. **Proposal Title.** Provide concise 1-5 word title for proposal
 
