@@ -26,7 +26,7 @@ For water year 2027, Google Drive will be used as the blob storage solution.
 
 jpe-model-output-storage/
 
-- 0.0.0/survival; 0.0.0/stock-recruit; 0.0.0/plad. Model output used throughout the forecast season.
+- 0.0.0/survivaltt; 0.0.0/stockrecruit; 0.0.0/plad. Model output used throughout the forecast season.
 - 0.1.0/btspasx; 0.1.0/inseason; 0.1.0/jpe. Model output for January 2027
 - 0.2.0/btspasx; 0.2.0/inseason; 0.2.0/jpe. Model output for February 2027
 - 0.3.0/btspasx; 0.3.0/inseason; 0.3.0/jpe. Model output for March 2027
@@ -34,20 +34,20 @@ jpe-model-output-storage/
 
 It is assumed that model output files will `.rds` files. Some models like BTSPAS-X may contain many files.
 
-LIZ - Do we need a separate folder for travel-time?
-
-Note that Ashley owns this Google Drive folder through avizek@flowwest.com and access can be granted by contacting Ashley Vizek.
+Note that Ashley owns this Google Drive folder through avizek@flowwest.com and access can be granted by contacting Ashley Vizek. You will then need to add a Shortcut to this folder to your "My Drive" so that the folder appears in your "My Drive"
 
 **File naming convention**
 
-date-modelname-modelcomponent-version
+date-modelname-modelcomponent-runyear-stream-site-version
+
+*runyear, site, stream only apply to certain models
 
 - date: mmddyyyy; 11062026
-- modelname: btspasx, stockrecruit, survival, traveltime, plad, inseason
-- modelcomponent: abundance, pcap...
+- modelname: btspasx, stockrecruit, survivaltt,  plad, inseason
+- modelcomponent: abundance, pcapkl, pcaptis, pcapall
+- runyear: yyyy; 2026. This applies to plad, btspasx-abundance
+- stream-site: e.g., battle-ubc. This applies to plad, btspasx-abundance, inseason, stockrecruit
 - version: vxxx; v000 or v010
-
-LIZ - are there other model names needed? are there other model components needed? i was thinking this would make it easier to pull the file needed but if you don't think so then we can get rid of it.
 
 **csv results output**
 
